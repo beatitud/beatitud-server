@@ -1,0 +1,110 @@
+worker_processes auto; # useful in multi-processing instance
+
+error_log  logs/global.err;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+
+    error_log  logs/http.log;
+    access_log  logs/http.err;
+
+    sendfile        on;
+    keepalive_timeout  65;
+    gzip  on;
+
+    # Conf SSL
+    ## Certificates
+    ssl_certificate     /etc/letsencrypt/live/feedis.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/feedis.io/privkey.pem;
+
+    ## Protocols
+    ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
+    ## Elliptic curve Diffie–Hellman (ECDH): keys exchange
+    ssl_ecdh_curve sect571r1:secp521r1:brainpoolP512r1:secp384r1;
+    ## cipher suite
+    ssl_ciphers EECDH+AESGCM:EECDH+CHACHA20:EECDH+AES;
+    ssl_prefer_server_ciphers on;
+
+    ## TLS parameters
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 5m;
+    ssl_session_tickets off;
+
+    server {
+        listen 80 default_server;
+        server_name *.${NGINX_HOST};
+
+
+        location ^~ /.well-known {
+            allow all;
+            root  /data/letsencrypt/;
+        }
+
+
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
+
+    server {
+          listen      443 ssl;
+          server_name ${NGINX_HOST};
+
+          error_log  logs/feedis.io.err;
+          access_log  logs/feedis.io.log;
+
+          location / {
+            root /data/feedis_landingpage;
+          }
+    }
+
+    server {
+        listen      443 ssl;
+        server_name staging.${NGINX_HOST} www.staging.${NGINX_HOST};
+
+        error_log  logs/staging.feedis.io.err;
+        access_log  logs/staging.feedis.io.log;
+
+        add_header Content-Type text/plain;
+        return 200 "Staging";
+    }
+
+    server {
+        listen      443 ssl;
+        server_name staging.api.${NGINX_HOST} www.staging.api.${NGINX_HOST};
+
+        error_log  logs/staging.api.feedis.io.err;
+        access_log  logs/staging.api.feedis.io.log;
+
+        add_header Content-Type text/plain;
+        return 200 "Staging Back";
+    }
+
+    server {
+        listen      443 ssl;
+        server_name showcase.${NGINX_HOST} www.showcase.${NGINX_HOST};
+
+        error_log  logs/showcase.feedis.io.err;
+        access_log  logs/showcase.feedis.io.log;
+
+        add_header Content-Type text/plain;
+        return 200 "Showcase";
+    }
+
+    server {
+        listen      443 ssl;
+        server_name showcase.api.${NGINX_HOST} www.showcase.api.${NGINX_HOST};
+
+        error_log  logs/showcase.api.feedis.io.err;
+        access_log  logs/showcase.api.feedis.io.log;
+
+        add_header Content-Type text/plain;
+        return 200 "Showcase Back";
+    }
+}

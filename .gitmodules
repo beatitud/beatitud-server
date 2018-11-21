@@ -1,0 +1,4 @@
+[submodule "beatitud_back"]
+	path = beatitud_back
+	url = https://github.com/beatitud/beatitud-back.git
+	branch = master

@@ -1,0 +1,11 @@
+# To use with docker-compose.yml (see Readme.md)
+# Will overwrite parameters needed in local dev state
+version: '3.2'
+
+services:
+  nginx:
+    environment:
+      - NGINX_HOST=localhost # Host name
+    volumes:
+      # Certificat authentification
+      - ./nginx/live:/etc/letsencrypt/live:ro
