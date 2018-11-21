@@ -20,8 +20,8 @@ http {
 
     # Conf SSL
     ## Certificates
-    ssl_certificate     /etc/letsencrypt/live/feedis.io/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/feedis.io/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/beatitud.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/beatitud.io/privkey.pem;
 
     ## Protocols
     ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
@@ -56,11 +56,11 @@ http {
           listen      443 ssl;
           server_name ${NGINX_HOST};
 
-          error_log  logs/feedis.io.err;
-          access_log  logs/feedis.io.log;
+          error_log  logs/beatitud.io.err;
+          access_log  logs/beatitud.io.log;
 
           location / {
-            root /data/feedis_landingpage;
+            root /data/beatitud_landingpage;
           }
     }
 
@@ -68,8 +68,8 @@ http {
         listen      443 ssl;
         server_name staging.${NGINX_HOST} www.staging.${NGINX_HOST};
 
-        error_log  logs/staging.feedis.io.err;
-        access_log  logs/staging.feedis.io.log;
+        error_log  logs/staging.beatitud.io.err;
+        access_log  logs/staging.beatitud.io.log;
 
         add_header Content-Type text/plain;
         return 200 "Staging";
@@ -79,8 +79,8 @@ http {
         listen      443 ssl;
         server_name staging.api.${NGINX_HOST} www.staging.api.${NGINX_HOST};
 
-        error_log  logs/staging.api.feedis.io.err;
-        access_log  logs/staging.api.feedis.io.log;
+        error_log  logs/staging.api.beatitud.io.err;
+        access_log  logs/staging.api.beatitud.io.log;
 
         add_header Content-Type text/plain;
         return 200 "Staging Back";
@@ -90,8 +90,8 @@ http {
         listen      443 ssl;
         server_name showcase.${NGINX_HOST} www.showcase.${NGINX_HOST};
 
-        error_log  logs/showcase.feedis.io.err;
-        access_log  logs/showcase.feedis.io.log;
+        error_log  logs/showcase.beatitud.io.err;
+        access_log  logs/showcase.beatitud.io.log;
 
         add_header Content-Type text/plain;
         return 200 "Showcase";
@@ -101,8 +101,8 @@ http {
         listen      443 ssl;
         server_name showcase.api.${NGINX_HOST} www.showcase.api.${NGINX_HOST};
 
-        error_log  logs/showcase.api.feedis.io.err;
-        access_log  logs/showcase.api.feedis.io.log;
+        error_log  logs/showcase.api.beatitud.io.err;
+        access_log  logs/showcase.api.beatitud.io.log;
 
         add_header Content-Type text/plain;
         return 200 "Showcase Back";
