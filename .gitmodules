@@ -2,3 +2,6 @@
 	path = beatitud_back
 	url = https://github.com/beatitud/beatitud-back.git
 	branch = master
+[submodule "back"]
+	path = back
+	url = https://github.com/beatitud/beatitud-back.git
