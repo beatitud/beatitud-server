@@ -7,15 +7,16 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8000:8000"
     environment:
-      - NGINX_HOST=TO_BE_OVERWRITTEN # Host name
+      - NGINX_HOST=beatitud.io # Host name
     command: /bin/sh -c "envsubst '$${NGINX_HOST}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
     volumes:
       - web:/data/web
       - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
       - ./nginx/logs:/etc/nginx/logs
       # Special to Beatitud
-      - ./beatitud_back:/data/beatitud_back:ro
+      - ./back:/data/back:ro
 
 volumes:
   web:
