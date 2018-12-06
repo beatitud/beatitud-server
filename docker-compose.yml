@@ -1,4 +1,4 @@
-version: '3.2'
+version: '2.2'
 
 services:
   django:
@@ -30,14 +30,12 @@ services:
     restart: always
     image: docker.elastic.co/beats/metricbeat:6.5.2
     environment:
-    - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-node1}
-    - KIBANA_HOST=${KIBANA_HOST:-node1}
-    - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
-    - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
+    - ELASTICSEARCH_HOST=search-beatitud-pxtyvfcgwra3pwfl34qhw4bejm.eu-west-3.es.amazonaws.com
+    - KIBANA_HOST=search-beatitud-pxtyvfcgwra3pwfl34qhw4bejm.eu-west-3.es.amazonaws.com/_plugin/kibana
+    - ELASTICSEARCH_USERNAME=""
+    - ELASTICSEARCH_PASSWORD=""
     # disable strict permission checks
     command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
-    deploy:
-      mode: global
 
 networks:
   elastic:
@@ -47,7 +45,3 @@ volumes:
   nginx:
   django:
   metricbeat:
-
-configs:
-  mb_config:
-    file: $PWD/elk/beats/metricbeat/config/metricbeat.yml
