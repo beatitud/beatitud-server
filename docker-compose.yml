@@ -29,9 +29,6 @@ services:
   metricbeat:
     restart: always
     image: docker.elastic.co/beats/metricbeat:6.5.2
-    configs:
-    - source: mb_config
-      target: /usr/share/metricbeat/metricbeat.yml
     environment:
     - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-node1}
     - KIBANA_HOST=${KIBANA_HOST:-node1}
