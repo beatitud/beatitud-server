@@ -1,6 +1,11 @@
 version: '3.2'
 
 services:
+  django:
+    extends:
+      file: ./back/docker-compose.yml
+      service: django
+
   nginx:
     restart: always
     build: ./nginx/
@@ -17,6 +22,35 @@ services:
       - ./nginx/logs:/etc/nginx/logs
       # Special to Beatitud
       - ./back:/data/back:ro
+      # Certificat authentification
+      - /root/certs-data/:/data/letsencrypt/:ro
+      - /etc/letsencrypt/:/etc/letsencrypt/:ro
+
+  metricbeat:
+    restart: always
+    image: docker.elastic.co/beats/metricbeat:6.5.2
+    configs:
+    - source: mb_config
+      target: /usr/share/metricbeat/metricbeat.yml
+    environment:
+    - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-node1}
+    - KIBANA_HOST=${KIBANA_HOST:-node1}
+    - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
+    - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
+    # disable strict permission checks
+    command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
+    deploy:
+      mode: global
+
+networks:
+  elastic:
+    external: true
 
 volumes:
-  web:
+  nginx:
+  django:
+  metricbeat:
+
+configs:
+  mb_config:
+    file: $PWD/elk/beats/metricbeat/config/metricbeat.yml
