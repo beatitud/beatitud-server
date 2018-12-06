@@ -18,6 +18,7 @@ services:
     command: /bin/sh -c "envsubst '$${NGINX_HOST}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
     volumes:
       - web:/data/web
+      - web:/data/web:rw
       - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
       - ./nginx/logs:/etc/nginx/logs
       # Special to Beatitud
