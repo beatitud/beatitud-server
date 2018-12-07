@@ -1,48 +1,19 @@
 version: '2.2'
 
 services:
-# Nginx
-  nginx-reverse-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-reverse-proxy
+  nginx:
     restart: always
+    build: ./nginx/
     ports:
     - "80:80"
     - "443:443"
-    volumes:
-    - /docker/ssl:/etc/nginx/certs:ro
-    - /var/run/docker.sock:/tmp/docker.sock:ro
-    - /docker/nginx/conf.d:/etc/nginx/conf.d
-    - /etc/nginx/vhost.d
-    - /usr/share/nginx/html
-    labels:
-    - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
-
-  # Let's Encrypt
-  letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    restart: always
-    volumes_from:
-    - nginx-reverse-proxy
-    container_name: letsencrypt
-    volumes:
-    - /docker/ssl:/etc/nginx/certs:rw
-    - /var/run/docker.sock:/var/run/docker.sock:ro
- 
-  portainer:
-    image: portainer/portainer
-    restart: always
-    container_name: portainer
-    command: -H unix:///var/run/docker.sock
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /server/portainer/portainer_data:/data
     environment:
-    - LETSENCRYPT_HOST=supervision.beatitud.io
-    - LETSENCRYPT_EMAIL=kariuki.kapombe@gmail.com
-    - VIRTUAL_HOST=supervision.beatitud.io
-    - VIRTUAL_PORT=9000
-    hostname: supervision.beatitud.io
+    - NGINX_HOST=TO_BE_OVERWRITTEN # Host name
+    command: /bin/sh -c "envsubst '$${NGINX_HOST}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+    volumes:
+    - web:/data/web
+    - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
+    - ./nginx/logs:/etc/nginx/logs
  
   django:
     extends:
