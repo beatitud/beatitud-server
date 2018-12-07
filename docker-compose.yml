@@ -19,22 +19,12 @@ services:
     extends:
       file: ./back/docker-compose.yml
       service: django
-    environment:
-    - LETSENCRYPT_HOST=api.beatitud.io
-    - LETSENCRYPT_EMAIL=kariuki.kapombe@gmail.com
-    - VIRTUAL_HOST=api.beatitud.io
-    - VIRTUAL_PORT=8000
     hostname: api.beatitud.io
 
   showcase:
     extends:
       file: ./showcase/docker-compose.yml
       service: showcase
-    environment:
-    - LETSENCRYPT_HOST=www.beatitud.io
-    - LETSENCRYPT_EMAIL=kariuki.kapombe@gmail.com
-    - VIRTUAL_HOST=www.beatitud.io
-    - VIRTUAL_PORT=4000
     hostname: www.beatitud.io
 
   metricbeat:
