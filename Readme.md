@@ -1,31 +1,30 @@
-This repo will be the root of the server.
+# Beatitud Server
 
-Here we will set up the nginx architecture and then link this to beatitud frontend and backend part.
+This repo is the root of the server.
 
-# WARNINGS
-- If you need to make a change in docker-compose, first be sure that it can be implemented in prod and in local. Otherwise put this change in docker-compose.prod or docker-compose.local.
+Here we set up the nginx architecture and then link this to beatitud frontend and backend parts.
 
-## To work in local
-First don't forget to pull all the submodules.
-1. With a terminal, go in nginx/, create live/beatitud.io. 
-Go in beatitud.io and launch
-```bash
-sudo openssl genrsa -out privkey.pem 2048
-sudo openssl req -new -key privkey.pem -out server.csr
-sudo openssl x509 -req -days 365 -in server.csr -signkey privkey.pem -out fullchain.pem
+## Connection to Beatitud VM
+
+```shell
+$ ssh ubuntu@beatitud.io
 ```
-Warning the last line will create an auto-signed certificat the browser will warn you about it. Use certbot or an official certification instance to get ride of this warning. (In prod we use certBot https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx).
 
-## To Launch
-To launch docker compose you need to merge docker-compose.yml with the prod state or local state.
-### Production
-```bash
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+Pull all git repos:
+```shell
+$ sudo git submodule update --recursive --remote
 ```
-### Local
-```bash
-docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
+
+To build django only, without cache :
+```shell
+$  docker-compose build --no-cache django
 ```
+
+To build all containers :
+```bash
+$ docker-compose up --build -d
+```
+
 You can check the config by replacing 'up -d' by 'config'.
 
 ## About Beatitud template
