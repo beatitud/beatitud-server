@@ -5,3 +5,6 @@
 [submodule "back"]
 	path = back
 	url = https://github.com/beatitud/beatitud-back.git
+[submodule "beatitud-showcase"]
+	path = beatitud-showcase
+	url = https://github.com/beatitud/beatitud-showcase.git

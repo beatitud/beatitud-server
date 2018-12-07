@@ -6,6 +6,11 @@ services:
       file: ./back/docker-compose.yml
       service: django
 
+  showcase:
+    extends:
+      file: ./showcase/docker-compose.yml
+      service: showcase
+
   nginx:
     restart: always
     build: ./nginx/
