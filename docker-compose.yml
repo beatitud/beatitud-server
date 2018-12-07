@@ -28,7 +28,22 @@ services:
     volumes:
     - /docker/ssl:/etc/nginx/certs:rw
     - /var/run/docker.sock:/var/run/docker.sock:ro
-
+ 
+  portainer:
+    image: portainer/portainer
+    restart: always
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /server/portainer/portainer_data:/data
+    environment:
+    - LETSENCRYPT_HOST=supervision.beatitud.io
+    - LETSENCRYPT_EMAIL=kariuki.kapombe@gmail.com
+    - VIRTUAL_HOST=supervision.beatitud.io
+    - VIRTUAL_PORT=9000
+    hostname: supervision.beatitud.io
+ 
   django:
     extends:
       file: ./back/docker-compose.yml
