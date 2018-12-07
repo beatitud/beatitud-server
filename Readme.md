@@ -10,6 +10,11 @@ Here we set up the nginx architecture and then link this to beatitud frontend an
 $ ssh ubuntu@beatitud.io
 ```
 
+To init submodules:
+```shell
+$ sudo git submodule init
+```
+
 To pull all git submodules:
 ```shell
 $ sudo git submodule update --recursive --remote
@@ -30,7 +35,7 @@ You can check the config by replacing 'up -d' by 'config'.
 ## About Beatitud template
 Within Beatitud template you can use env var in this file witht the syntax ${VAR_NAME} then you have to add in the docker-compose file in the command directive of nginx container. Next to $${NGINX_HOST} (double $ is important!).
 Ex:
-nginx.conf.template
+nginx.conf
 ```
 ...
 server {
@@ -44,13 +49,13 @@ docker-compose.ym
     environment:
       - NGINX_HOST=beatitud.io
       - SPECIAL_DOMAIN=special.com
-    command: /bin/sh -c "envsubst '$${NGINX_HOST} $${SPECIAL_DOMAIN}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+    command: /bin/sh -c "envsubst '$${NGINX_HOST} $${SPECIAL_DOMAIN}' < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
 ```
 
-## Reload a modification in nginx.conf.template
+## Reload a modification in nginx.conf
 In the nginx container
 ```bash
-envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+envsubst < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf
 nginx -s reload
 ```
 

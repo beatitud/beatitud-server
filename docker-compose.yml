@@ -17,12 +17,13 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "4000:4000"
       - "8000:8000"
     environment:
       - NGINX_HOST=beatitud.io # Host name
-    command: /bin/sh -c "envsubst '$${NGINX_HOST}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+    command: /bin/sh -c "envsubst '$${NGINX_HOST}' < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
     volumes:
-      - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/logs:/etc/nginx/logs
       # Special to Beatitud
       - ./back:/data/back:ro
@@ -32,6 +33,7 @@ services:
 
   metricbeat:
     restart: always
+    container_name: metricbeat
     image: docker.elastic.co/beats/metricbeat:6.5.2
     environment:
     - ELASTICSEARCH_HOST=search-beatitud-pxtyvfcgwra3pwfl34qhw4bejm.eu-west-3.es.amazonaws.com
