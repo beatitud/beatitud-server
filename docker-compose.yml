@@ -1,22 +1,33 @@
 version: '2.2'
 
 services:
-  nginx:
-    container_name: beatitud_nginx
+# Nginx
+  nginx-reverse-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-reverse-proxy
     restart: always
-    build: ./nginx/
     ports:
-      - "80:80"
-    environment:
-      - NGINX_HOST=beatitud.io # Host name
-    command: /bin/sh -c "envsubst '$${NGINX_HOST}' < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+    - "80:80"
+    - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/logs:/etc/nginx/logs
-      - ./back:/data/back:ro
-      # Certificat authentification
-      - /root/certs-data/:/data/letsencrypt/:ro
-      - /etc/letsencrypt/:/etc/letsencrypt/:ro
+    - /docker/ssl:/etc/nginx/certs:ro
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+    - /docker/nginx/conf.d:/etc/nginx/conf.d
+    - /etc/nginx/vhost.d
+    - /usr/share/nginx/html
+    labels:
+    - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+  # Let's Encrypt
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    volumes_from:
+    - nginx-reverse-proxy
+    container_name: letsencrypt
+    volumes:
+    - /docker/ssl:/etc/nginx/certs:rw
+    - /var/run/docker.sock:/var/run/docker.sock:ro
 
   django:
     extends:
