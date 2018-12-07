@@ -15,7 +15,6 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/logs:/etc/nginx/logs
-      # Special to Beatitud
       - ./back:/data/back:ro
       # Certificat authentification
       - /root/certs-data/:/data/letsencrypt/:ro
@@ -42,6 +41,8 @@ services:
     - ELASTICSEARCH_PASSWORD=""
     # disable strict permission checks
     command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
+    ports:
+    - "333:333"
 
 volumes:
   nginx:
