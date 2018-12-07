@@ -15,6 +15,8 @@ services:
     - web:/data/web
     - ./nginx/$${NGINX_CONF_PATH}:/etc/nginx/$${NGINX_CONF_PATH}:ro
     - ./nginx/logs:/etc/nginx/logs
+    - /root/certs-data/:/data/letsencrypt/:ro
+    - /etc/letsencrypt/:/etc/letsencrypt/:ro
  
   django:
     extends:
