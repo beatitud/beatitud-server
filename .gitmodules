@@ -1,10 +1,6 @@
-[submodule "beatitud_back"]
-	path = beatitud_back
-	url = https://github.com/beatitud/beatitud-back.git
-	branch = master
 [submodule "back"]
 	path = back
 	url = https://github.com/beatitud/beatitud-back.git
-[submodule "beatitud-showcase"]
-	path = beatitud-showcase
+[submodule "showcase"]
+	path = showcase
 	url = https://github.com/beatitud/beatitud-showcase.git
