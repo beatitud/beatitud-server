@@ -10,7 +10,7 @@ Here we set up the nginx architecture and then link this to beatitud frontend an
 $ ssh ubuntu@beatitud.io
 ```
 
-Pull all git repos:
+To pull all git submodules:
 ```shell
 $ sudo git submodule update --recursive --remote
 ```
