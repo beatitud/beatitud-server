@@ -9,7 +9,6 @@ services:
     - "80:80"
     - "443:443"
     environment:
-    - NGINX_CONF_PATH=nginx.conf.template
     - NGINX_HOST=beatitud.io
     command: /bin/sh -c "envsubst '$${NGINX_HOST}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
     volumes:

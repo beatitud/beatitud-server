@@ -25,7 +25,6 @@ To build django only, without cache :
 $  docker-compose build --no-cache django
 ```
 
-To build all containers :
 ```bash
 $ docker-compose up --build -d
 ```
