@@ -34,6 +34,12 @@ services:
       file: ./showcase/docker-compose.yml
       service: showcase
 
+  showcase_angular:
+    container_name: showcase_angular
+    extends:
+      file: ./showcase-angular/docker-compose.yml
+      service: showcase_angular
+
   metricbeat:
     restart: always
     container_name: metricbeat
