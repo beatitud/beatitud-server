@@ -79,7 +79,7 @@ http {
           access_log  logs/api.beatitud.io.log;
 
           location / {
-              proxy_pass       http://django;
+              proxy_pass       http://localhost:8000;
           }
     }
 
