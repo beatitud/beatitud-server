@@ -52,17 +52,6 @@ http {
     }
 
     server {
-        listen      443 ssl;
-        server_name staging.${NGINX_HOST} www.staging.${NGINX_HOST};
-
-        error_log  logs/staging.beatitud.io.err;
-        access_log  logs/staging.beatitud.io.log;
-
-        add_header Content-Type text/plain;
-        return 200 "Staging";
-    }
-
-    server {
           listen      443 ssl;
           server_name ${NGINX_HOST};
 
@@ -75,6 +64,16 @@ http {
           }
     }
 
+    server {
+        listen      443 ssl;
+        server_name staging.${NGINX_HOST} www.staging.${NGINX_HOST};
+
+        error_log  logs/staging.beatitud.io.err;
+        access_log  logs/staging.beatitud.io.log;
+
+        add_header Content-Type text/plain;
+        return 200 "Staging";
+    }
 
     server {
         listen      443 ssl;
