@@ -1,0 +1,12 @@
+version: '2.2'
+
+services:
+
+  angular_showcase:
+    container_name: angular_showcase
+    build: .
+    volumes:
+    - '.:/usr/src/app'
+    - '/usr/src/app/node_modules'
+    ports:
+    - '4200:4200'

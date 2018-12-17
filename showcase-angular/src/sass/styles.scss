@@ -1,0 +1,49 @@
+@import './_variables';
+@import './_mixins';
+
+// Import fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext");
+
+*[layout-padding] {
+  padding: 30px;
+}
+
+*[layout-padding="2"] {
+  padding: 60px;
+}
+
+p, div, span {
+  font-family: Raleway;
+  font-weight: 500;
+}
+
+mat-icon {
+  margin-right: 5px;
+  vertical-align: bottom;
+}
+
+h1, h2 {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.inline-icon {
+  margin-right: 16px;
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary {
+  background-color: #449bff;
+}

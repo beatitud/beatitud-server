@@ -1,0 +1,23 @@
+@import '~sass/styles';
+
+.container {
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+}
+
+app-top-bar {
+  height: 64px;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.sub-container {
+  overflow: hidden;
+}
+
+.mat-toolbar {
+  background: #f5f5f5;
+  color: rgba(0,0,0,.87);
+}

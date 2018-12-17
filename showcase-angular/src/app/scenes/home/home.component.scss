@@ -1,0 +1,42 @@
+@import '~sass/variables';
+
+.title {
+  font-weight: 800;
+  color: #444;
+  font-size: 3em;
+}
+
+.subtitle {
+  margin-top: 20px;
+  color: #444;
+  font-size: 1.4em;
+}
+
+.action-button {
+  margin-top: 30px;
+}
+
+.first-wall {
+  //background-image: linear-gradient(to bottom, #5dcaf3, #5fd4da, #89d9bb, #b9d9a4, #e4d69f);
+  background-image: linear-gradient(to bottom, #5dcaf3, #7ed8d8, #b3dfc5, #dee4c9, #f6ece0);
+  height: 100vh;
+  background-size: cover;
+
+  .title {
+  }
+
+  .subtitle {
+  }
+
+}
+
+.second-wall {
+  height: 80vh;
+
+  .title {
+  }
+
+  .subtitle {
+  }
+
+}
