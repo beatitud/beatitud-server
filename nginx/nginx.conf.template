@@ -60,7 +60,7 @@ http {
     }
 
     upstream showcase {
-        server showcase:4000;
+        server showcase_angular:4200;
     }
     server {
           listen      443 ssl;
