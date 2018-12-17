@@ -17,6 +17,8 @@ services:
     - ./nginx/logs:/etc/nginx/logs
     - /root/certs-data/:/data/letsencrypt/:ro
     - /etc/letsencrypt/:/etc/letsencrypt/:ro
+    networks:
+      - docker-network
  
   django:
     container_name: django
@@ -52,3 +54,6 @@ volumes:
   showcase:
   metricbeat:
   web:
+
+networks:
+  docker-network:

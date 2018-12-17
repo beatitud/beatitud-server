@@ -10,7 +10,6 @@ http {
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
 
-
     error_log  logs/http.log;
     access_log  logs/http.err;
 
@@ -35,6 +34,14 @@ http {
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 5m;
     ssl_session_tickets off;
+
+    # Proxy conf
+    client_max_body_size    10m;
+    client_body_buffer_size 128k;
+    proxy_connect_timeout   90;
+    proxy_send_timeout      90;
+    proxy_read_timeout      90;
+    proxy_buffers           32 4k;
 
     # We redirect all http to https
     server {
@@ -64,11 +71,6 @@ http {
           }
     }
 
-    upstream django_server {
-        server      172.0.0.1:8000;
-    }
-
-
     server {
           listen      443 ssl;
           server_name api.${NGINX_HOST};
@@ -77,16 +79,7 @@ http {
           access_log  logs/api.beatitud.io.log;
 
           location / {
-              proxy_pass       http://django_server;
-              proxy_set_header        Host            $host;
-              proxy_set_header        X-Real-IP       $remote_addr;
-              proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-              client_max_body_size    10m;
-              client_body_buffer_size 128k;
-              proxy_connect_timeout   90;
-              proxy_send_timeout      90;
-              proxy_read_timeout      90;
-              proxy_buffers           32 4k;
+              proxy_pass       http://django;
           }
     }
 
