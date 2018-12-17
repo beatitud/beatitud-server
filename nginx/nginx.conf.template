@@ -58,6 +58,10 @@ http {
         }
     }
 
+    upstream django_server {
+        server localhost:8000;
+    }
+
     server {
           listen      443 ssl;
           server_name ${NGINX_HOST};
@@ -79,7 +83,7 @@ http {
           access_log  logs/api.beatitud.io.log;
 
           location / {
-              proxy_pass       http://localhost:8000;
+              proxy_pass       http://django_server;
           }
     }
 
