@@ -11,10 +11,10 @@ services:
     environment:
     - NGINX_CONF_PATH=nginx.conf.template
     - NGINX_HOST=beatitud.io
-    command: /bin/sh -c "envsubst '$${NGINX_HOST}' < /etc/nginx/$${NGINX_CONF_PATH} > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+    command: /bin/sh -c "envsubst '$${NGINX_HOST}' < /etc/nginx/${NGINX_CONF_PATH} > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
     volumes:
     - web:/data/web
-    - ./nginx/$${NGINX_CONF_PATH}:/etc/nginx/$${NGINX_CONF_PATH}:ro
+    - ./nginx/${NGINX_CONF_PATH}:/etc/nginx/${NGINX_CONF_PATH}:ro
     - ./nginx/logs:/etc/nginx/logs
     - /root/certs-data/:/data/letsencrypt/:ro
     - /etc/letsencrypt/:/etc/letsencrypt/:ro
