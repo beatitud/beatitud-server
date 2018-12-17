@@ -64,6 +64,20 @@ http {
           }
     }
 
+
+    server {
+          listen      443 ssl;
+          server_name api.${NGINX_HOST};
+
+          error_log  logs/api.beatitud.io.err;
+          access_log  logs/api.beatitud.io.log;
+
+          location / {
+              proxy_pass       http://localhost:8000;
+              proxy_set_header Host api.${NGINX_HOST};
+          }
+    }
+
     server {
         listen      443 ssl;
         server_name staging.${NGINX_HOST} www.staging.${NGINX_HOST};
