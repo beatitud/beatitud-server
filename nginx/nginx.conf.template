@@ -60,7 +60,7 @@ http {
     }
 
     upstream showcase {
-        server 127.0.0.1:4000;
+        server showcase:4000;
     }
     server {
           listen      443 ssl;
@@ -83,7 +83,6 @@ http {
     }
 
     upstream django_server {
-        ip_hash;
         server django:8000;
     }
     server {
