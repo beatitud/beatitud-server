@@ -19,6 +19,8 @@ services:
     - /etc/letsencrypt/:/etc/letsencrypt/:ro
     networks:
       - docker-network
+    depends_on:
+    - django
  
   django:
     container_name: django
@@ -31,6 +33,8 @@ services:
     environment:
     - VIRTUAL_HOST=api.beatitud.io
     - VIRTUAL_PORT=8000
+    expose:
+    - "5959"
 
   showcase:
     container_name: showcase
