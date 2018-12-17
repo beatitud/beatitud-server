@@ -28,15 +28,21 @@ services:
     hostname: api.beatitud.io
     networks:
     - docker-network
+    environment:
+    - VIRTUAL_HOST=api.beatitud.io
+    - VIRTUAL_PORT=8000
 
   showcase:
     container_name: showcase
     extends:
       file: ./showcase/docker-compose.yml
       service: showcase
-    hostname: www.beatitud.io
+    hostname: beatitud.io
     networks:
     - docker-network
+    environment:
+    - VIRTUAL_HOST=beatitud.io
+    - VIRTUAL_PORT=4000
 
   metricbeat:
     restart: always
