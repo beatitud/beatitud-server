@@ -1,3 +1,4 @@
+user  nginx;
 worker_processes auto; # useful in multi-processing instance
 
 error_log  logs/global.err;

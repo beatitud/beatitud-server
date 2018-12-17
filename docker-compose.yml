@@ -1,12 +1,20 @@
 version: '2.2'
 
 services:
+  django:
+    container_name: django
+    extends:
+      file: ./back/docker-compose.yml
+      service: django
+    expose:
+    - "5959"
+
   nginx:
     container_name: nginx
     restart: always
     build: ./nginx/
     ports:
-    - "80:80"
+    - "0.0.0.0:80:80"
     - "443:443"
     environment:
     - NGINX_HOST=beatitud.io
@@ -17,33 +25,14 @@ services:
     - ./nginx/logs:/etc/nginx/logs
     - /root/certs-data/:/data/letsencrypt/:ro
     - /etc/letsencrypt/:/etc/letsencrypt/:ro
-    networks:
-      - docker-network
     depends_on:
     - django
  
-  django:
-    container_name: django
-    extends:
-      file: ./back/docker-compose.yml
-      service: django
-    hostname: api.beatitud.io
-    networks:
-    - docker-network
-    environment:
-    - VIRTUAL_HOST=api.beatitud.io
-    - VIRTUAL_PORT=8000
-    expose:
-    - "5959"
-
   showcase:
     container_name: showcase
     extends:
       file: ./showcase/docker-compose.yml
       service: showcase
-    hostname: beatitud.io
-    networks:
-    - docker-network
     environment:
     - VIRTUAL_HOST=beatitud.io
     - VIRTUAL_PORT=4000
@@ -61,8 +50,6 @@ services:
     command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
     ports:
     - "333:333"
-    networks:
-    - docker-network
 
 volumes:
   nginx:
@@ -70,6 +57,3 @@ volumes:
   showcase:
   metricbeat:
   web:
-
-networks:
-  docker-network:
