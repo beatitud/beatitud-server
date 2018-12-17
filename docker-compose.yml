@@ -14,7 +14,7 @@ services:
     restart: always
     build: ./nginx/
     ports:
-    - "0.0.0.0:80:80"
+    - "80:80"
     - "443:443"
     environment:
     - NGINX_HOST=beatitud.io
@@ -33,9 +33,6 @@ services:
     extends:
       file: ./showcase/docker-compose.yml
       service: showcase
-    environment:
-    - VIRTUAL_HOST=beatitud.io
-    - VIRTUAL_PORT=4000
 
   metricbeat:
     restart: always
