@@ -19,7 +19,7 @@ http {
     gzip  on;
 
     # Conf SSL
-    ssl on;
+    ssl off;
     ## Certificates
     ssl_certificate     /etc/letsencrypt/live/beatitud.io/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/beatitud.io/privkey.pem;
