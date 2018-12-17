@@ -58,10 +58,9 @@ http {
         }
     }
 
-    upstream django_server {
-        server localhost:8000;
+    upstream showcase {
+        server localhost:4000;
     }
-
     server {
           listen      443 ssl;
           server_name ${NGINX_HOST};
@@ -70,11 +69,21 @@ http {
           access_log  logs/beatitud.io.log;
 
           location / {
-              proxy_pass       http://localhost:4000;
-              proxy_set_header Host ${NGINX_HOST};
+                proxy_pass            http://showcase;
+                proxy_set_header      X-Real-IP       $remote_addr;
+                proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header      Host            $http_host;
+                proxy_set_header      X-NginX-Proxy   true;
+                proxy_set_header      Upgrade         $http_upgrade;
+                proxy_set_header      Connection      "upgrade";
+                proxy_redirect        off;
+                proxy_http_version    1.1;
           }
     }
 
+    upstream django_server {
+        server localhost:8000;
+    }
     server {
           listen      443 ssl;
           server_name api.${NGINX_HOST};
